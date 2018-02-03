@@ -18,5 +18,9 @@
   "homepage": "https://github.com/Sethuraman/presentations-ci-cd-functional-tests#readme",
   "dependencies": {
     "nightwatch": "^0.9.19"
+  },
+  "devDependencies": {
+    "geckodriver": "^1.10.0",
+    "selenium-server-standalone-jar": "^3.8.1"
   }
 }
