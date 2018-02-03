@@ -1,0 +1,22 @@
+{
+  "name": "presentations-ci-cd-functional-tests",
+  "version": "1.0.0",
+  "description": "functional tests for calculator app",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sethuraman/presentations-ci-cd-functional-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sethuraman/presentations-ci-cd-functional-tests/issues"
+  },
+  "homepage": "https://github.com/Sethuraman/presentations-ci-cd-functional-tests#readme",
+  "dependencies": {
+    "nightwatch": "^0.9.19"
+  }
+}
