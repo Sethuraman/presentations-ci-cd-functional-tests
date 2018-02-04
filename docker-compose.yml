@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  service:
+    image: regsethu/testcandidatelauncher:1.0.0
+    working_dir: /data
+    volumes:
+      - $PWD/service:/data
+    command: |
+      /bin/bash -c \
+      "npm install && \
+       serverless offline start --port 3001"
+
+  webapp:
+    image: regsethu/testcandidatelauncher:1.0.0
+    working_dir: /data
+    depends_on:
+      - service
+    volumes:
+      - $PWD/webapp:/data
+    command: |
+      /bin/bash -c \
+      "yarn install && \
+       REACT_APP_API_URL="http://service:3001" yarn build  
+       http-server build"  
+
+  functional-test:
+    image: regsethu/functionaltest:1.0.0
+    working_dir: /data
+    depends_on:
+      - service
+      - webapp
+    volumes:
+      - $PWD/functional-tests:/data
+    command: |
+      /bin/bash -c \
+      "sleep 10 && 
+       npm install && \
+       LAUNCH_URL='http://webapp:3000' npm run test"  
+

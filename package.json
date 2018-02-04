@@ -4,7 +4,7 @@
   "description": "functional tests for calculator app",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "nightwatch"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Sethuraman/presentations-ci-cd-functional-tests#readme",
   "dependencies": {
+    "chromedriver": "^2.35.0",
     "nightwatch": "^0.9.19"
   },
   "devDependencies": {

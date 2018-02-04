@@ -1,3 +1,5 @@
 logs/*.*
 reports/*.*
 node_modules/*
+webapp/
+service/
