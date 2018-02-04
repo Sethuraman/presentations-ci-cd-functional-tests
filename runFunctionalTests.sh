@@ -1,12 +1,49 @@
 #!/usr/bin/env bash
 set -e
+pwd
 
+function fail {
+  echo $1 >&2
+  exit 1
+}
+
+function retry {
+  local n=1
+  local max=5
+  local delay=15
+  while true; do
+    "$@" && break || {
+      if [[ $n -lt $max ]]; then
+        ((n++))
+        echo "Command failed. Attempt $n/$max:"
+        sleep $delay;
+      else
+        fail "The command has failed after $n attempts."
+      fi
+    }
+  done
+}
+
+trap 'docker-compose -f ./functional-tests/docker-compose.yml rm -s -f' EXIT
+
+docker-compose -f ./functional-tests/docker-compose.yml up -d
+
+sleep 10
+
+pushd functional-tests
 trap 'docker-compose rm -f' EXIT
+npm install
 
-docker-compose up --abort-on-container-exit
-exitCode=$(docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d ' ')
-if [ "$exitCode" -eq "1" ]; then
-	exit 1
-else
-	exit 0
-fi
+#wait for the service to come up
+retry curl "http://localhost:3001/"
+
+#wait for the webapp to come up
+retry curl "http://localhost:3000"
+
+LAUNCH_URL="http://localhost:3000" npm run test
+exitCode=$?
+
+popd
+trap 'docker-compose -f ./functional-tests/docker-compose.yml rm -s -f' EXIT
+
+exit $exitCode

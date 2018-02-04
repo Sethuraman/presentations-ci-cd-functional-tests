@@ -3,3 +3,4 @@ reports/*.*
 node_modules/*
 webapp/
 service/
+selenium-debug.log

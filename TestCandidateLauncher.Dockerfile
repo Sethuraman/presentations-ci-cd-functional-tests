@@ -21,5 +21,6 @@ RUN apt-get update && \
 RUN npm install \
     cfn-create-or-update@1.1.2 \
     serverless@${SERVERLESS_VERSION} \
+    serverless-offline \
     http-server \
     -g
