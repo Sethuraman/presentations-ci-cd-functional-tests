@@ -9,7 +9,7 @@ function fail {
 
 function retry {
   local n=1
-  local max=5
+  local max=20
   local delay=15
   while true; do
     "$@" && break || {
@@ -31,7 +31,7 @@ docker-compose -f ./functional-tests/docker-compose.yml up -d
 sleep 10
 
 pushd functional-tests
-trap 'docker-compose rm -f' EXIT
+trap 'docker-compose rm -s -f' EXIT
 npm install
 
 #wait for the service to come up
